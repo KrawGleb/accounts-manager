@@ -1,6 +1,6 @@
-﻿using iLearning.AccountsManager.Infrastructure.Persistence;
-using iLearning.AccountsManager.Infrastructure.Persistence.Repositories;
-using iLearning.AccountsManager.Infrastructure.Persistence.Repositories.Interfaces;
+﻿using iLearning.AccountsManager.Infrastructure.Auth;
+using iLearning.AccountsManager.Infrastructure.Auth.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,11 +11,12 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<ApplicationDbContext>(options => 
+        services.AddDbContext<AuthenticationDbContext>(options => 
             options
-                .UseSqlServer(configuration.GetConnectionString("Default")));
+                .UseSqlServer(configuration.GetConnectionString("IdentityConnection")));
 
-        services.AddScoped<IAccountsRepository, AccountsRepository>();
+        services.AddIdentity<Account, IdentityRole>()
+            .AddEntityFrameworkStores<AuthenticationDbContext>();
 
         return services;
     }

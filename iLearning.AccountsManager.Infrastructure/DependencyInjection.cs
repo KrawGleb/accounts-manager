@@ -1,4 +1,6 @@
 ﻿using iLearning.AccountsManager.Infrastructure.Persistence;
+using iLearning.AccountsManager.Infrastructure.Persistence.Repositories;
+using iLearning.AccountsManager.Infrastructure.Persistence.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +15,7 @@ public static class DependencyInjection
             options
                 .UseSqlServer(configuration.GetConnectionString("Default")));
 
+        services.AddScoped<IAccountsRepository, AccountsRepository>();
 
         return services;
     }

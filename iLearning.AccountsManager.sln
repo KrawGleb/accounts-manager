@@ -3,7 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iLearning.AccountsManager.WebUI", "iLearning.AccountsManager.WebUI\iLearning.AccountsManager.WebUI.csproj", "{7965550D-71A6-44D7-AF27-DDDF794C2B23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iLearning.AccountsManager.WebUI", "iLearning.AccountsManager.WebUI\iLearning.AccountsManager.WebUI.csproj", "{7965550D-71A6-44D7-AF27-DDDF794C2B23}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{423F2EBE-4889-48EB-BFDB-E4AAC351CE74}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{566FFFF2-59D6-4880-BA2B-CA65720384FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iLearning.AccountsManager.Domain", "iLearning.AccountsManager.Domain\iLearning.AccountsManager.Domain.csproj", "{21A7BC77-2681-4C84-84BE-0C285616852A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iLearning.AccountsManager.Application", "iLearning.AccountsManager.Application\iLearning.AccountsManager.Application.csproj", "{51B7A0B5-CE4E-479C-82DC-C5F66DC0FE10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iLearning.AccountsManager.Infrastructure", "iLearning.AccountsManager.Infrastructure\iLearning.AccountsManager.Infrastructure.csproj", "{383C4DF7-D4BF-4CC3-9F91-E0B034708010}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +29,27 @@ Global
 		{7965550D-71A6-44D7-AF27-DDDF794C2B23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7965550D-71A6-44D7-AF27-DDDF794C2B23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7965550D-71A6-44D7-AF27-DDDF794C2B23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21A7BC77-2681-4C84-84BE-0C285616852A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21A7BC77-2681-4C84-84BE-0C285616852A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21A7BC77-2681-4C84-84BE-0C285616852A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21A7BC77-2681-4C84-84BE-0C285616852A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51B7A0B5-CE4E-479C-82DC-C5F66DC0FE10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51B7A0B5-CE4E-479C-82DC-C5F66DC0FE10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51B7A0B5-CE4E-479C-82DC-C5F66DC0FE10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51B7A0B5-CE4E-479C-82DC-C5F66DC0FE10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{383C4DF7-D4BF-4CC3-9F91-E0B034708010}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{383C4DF7-D4BF-4CC3-9F91-E0B034708010}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{383C4DF7-D4BF-4CC3-9F91-E0B034708010}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{383C4DF7-D4BF-4CC3-9F91-E0B034708010}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7965550D-71A6-44D7-AF27-DDDF794C2B23} = {566FFFF2-59D6-4880-BA2B-CA65720384FD}
+		{21A7BC77-2681-4C84-84BE-0C285616852A} = {566FFFF2-59D6-4880-BA2B-CA65720384FD}
+		{51B7A0B5-CE4E-479C-82DC-C5F66DC0FE10} = {566FFFF2-59D6-4880-BA2B-CA65720384FD}
+		{383C4DF7-D4BF-4CC3-9F91-E0B034708010} = {566FFFF2-59D6-4880-BA2B-CA65720384FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {43D01526-D766-44C1-A327-8FEC9E32E588}

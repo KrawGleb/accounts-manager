@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iLearning.AccountsManager.A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iLearning.AccountsManager.Infrastructure", "iLearning.AccountsManager.Infrastructure\iLearning.AccountsManager.Infrastructure.csproj", "{383C4DF7-D4BF-4CC3-9F91-E0B034708010}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iLearning.AccountsManager.API", "iLearning.AccountsManager.API\iLearning.AccountsManager.API.csproj", "{EE15EE43-CC42-46A0-9ADC-067702CBE561}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{383C4DF7-D4BF-4CC3-9F91-E0B034708010}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{383C4DF7-D4BF-4CC3-9F91-E0B034708010}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{383C4DF7-D4BF-4CC3-9F91-E0B034708010}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE15EE43-CC42-46A0-9ADC-067702CBE561}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE15EE43-CC42-46A0-9ADC-067702CBE561}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE15EE43-CC42-46A0-9ADC-067702CBE561}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE15EE43-CC42-46A0-9ADC-067702CBE561}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +56,7 @@ Global
 		{21A7BC77-2681-4C84-84BE-0C285616852A} = {566FFFF2-59D6-4880-BA2B-CA65720384FD}
 		{51B7A0B5-CE4E-479C-82DC-C5F66DC0FE10} = {566FFFF2-59D6-4880-BA2B-CA65720384FD}
 		{383C4DF7-D4BF-4CC3-9F91-E0B034708010} = {566FFFF2-59D6-4880-BA2B-CA65720384FD}
+		{EE15EE43-CC42-46A0-9ADC-067702CBE561} = {566FFFF2-59D6-4880-BA2B-CA65720384FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {43D01526-D766-44C1-A327-8FEC9E32E588}

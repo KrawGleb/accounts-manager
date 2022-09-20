@@ -1,7 +1,9 @@
-﻿using iLearning.AccountsManager.Domain.Models;
+﻿using iLearning.AccountsManager.API.Hubs;
+using iLearning.AccountsManager.Domain.Models;
 using iLearning.AccountsManager.Infrastructure.Auth.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -15,15 +17,18 @@ public class AuthController : ControllerBase
 {
     private readonly UserManager<Account> _userManager;
     private readonly SignInManager<Account> _signInManager;
+    private readonly IHubContext<AccountsHub> _hub;
     private readonly IConfiguration _configuration;
 
     public AuthController(
         UserManager<Account> userManager,
         SignInManager<Account> signInManager,
+        IHubContext<AccountsHub> hub,
         IConfiguration configuration)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _hub = hub;
         _configuration = configuration;
     }
 
@@ -48,6 +53,8 @@ public class AuthController : ControllerBase
         };
 
         var result = await _userManager.CreateAsync(account, registrationRequest.Password);
+
+        await _hub.Clients.All.SendAsync("NewAccount");
 
         return Ok(result);
     }
@@ -83,6 +90,6 @@ public class AuthController : ControllerBase
             return Ok(new { token, Id = user.Id });
         }
 
-        return BadRequest();
+        return BadRequest(new {message = "Email or Password is incorrect."});
     }
 }

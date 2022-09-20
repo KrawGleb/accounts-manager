@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, tap } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { LoginRequest } from '../models/login-request.model';
 import { RegistrationRequest } from '../models/registration-request.model';
 
@@ -10,7 +10,8 @@ import { RegistrationRequest } from '../models/registration-request.model';
 export class AuthService {
   private readonly BASE_URL = 'https://localhost:7286/api';
 
-  constructor(private readonly httpClient: HttpClient) {}
+  constructor(
+    private readonly httpClient: HttpClient) {}
 
   public register(registrationRequest: RegistrationRequest): Observable<any> {
     return this.httpClient.post(
@@ -19,13 +20,18 @@ export class AuthService {
     );
   }
 
-  public login(loginRequest: LoginRequest) : Observable<any> {
-    return this.httpClient.post(
-      this.BASE_URL + '/auth/login',
-      loginRequest
-    ).pipe(tap((response: any) => {
-      localStorage.setItem('token', response.token);
-      localStorage.setItem('my_id', response.id);
-    }));
+  public login(loginRequest: LoginRequest): Observable<any> {
+    return this.httpClient
+      .post(this.BASE_URL + '/auth/login', loginRequest)
+      .pipe(
+        tap((response: any) => {
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('my_id', response.id);
+        }),
+        catchError((err) => {
+
+          return of();
+        })
+      );
   }
 }

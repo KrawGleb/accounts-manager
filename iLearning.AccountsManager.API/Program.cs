@@ -1,3 +1,4 @@
+using iLearning.AccountsManager.API.Hubs;
 using iLearning.AccountsManager.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -7,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 var key = Encoding.UTF8.GetBytes(builder.Configuration["ApplicationSettings:JWT_Secret"].ToString());
 
 // Add services to the container.
+builder.Services.AddSignalR();
+
 builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddCors(options =>
@@ -60,5 +63,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<AccountsHub>("/hub");
 
 app.Run();

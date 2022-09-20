@@ -1,9 +1,12 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { Account } from 'src/app/models/account.model';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { AccountsService } from 'src/app/services/accounts.service';
+import { SignalRService } from 'src/app/services/signal-r.service';
 
 @Component({
   selector: 'acm-accounts-table',
@@ -23,8 +26,12 @@ export class AccountsTableComponent implements OnInit {
   public dataSource = new MatTableDataSource<Account>();
   public selection = new SelectionModel<Account>(true, []);
 
-  constructor(private readonly accountsService: AccountsService) {
+  constructor(
+    private readonly accountsService: AccountsService,
+    private readonly signalRService: SignalRService,
+    private readonly router: Router) {
     this.loadAccounts();
+    this.setUpHub();
   }
 
   ngOnInit(): void {}
@@ -40,18 +47,6 @@ export class AccountsTableComponent implements OnInit {
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.data.forEach((row) => this.selection.select(row));
-  }
-
-  public loadAccounts() {
-    this.accountsService
-      .getAccounts()
-      .pipe(
-        tap((response) => {
-          this.dataSource = new MatTableDataSource<Account>(response);
-          this.selection.clear();
-        })
-      )
-      .subscribe();
   }
 
   public deleteSelectedAccounts() {
@@ -83,5 +78,50 @@ export class AccountsTableComponent implements OnInit {
 
   public getMyId() {
     return localStorage.getItem('my_id');
+  }
+
+  private loadAccounts() {
+    this.accountsService
+      .getAccounts()
+      .pipe(
+        tap((response) => {
+          this.dataSource = new MatTableDataSource<Account>(response);
+          this.selection.clear();
+        })
+      )
+      .subscribe();
+  }
+
+  private setUpHub() {
+    this.signalRService.startConnection();
+
+    this.signalRService.addNewAccountListener(() => this.loadAccounts());
+
+    this.signalRService.addAccountBlockedListener((id: string) => {
+      console.log(`Block: ${id}`);
+      if (id === localStorage.getItem('my_id')) {
+        localStorage.removeItem('token');
+
+        this.router.navigateByUrl('/login');
+      }
+
+      this.loadAccounts();
+    });
+
+    this.signalRService.addAccountUnblockedListener((id: string) => {
+      console.log(`Unblock: ${id}`);
+      this.loadAccounts();
+    });
+
+    this.signalRService.addAccountDeletedListener((id: string) => {
+      console.log(`Delete: ${id}`);
+      if (id === localStorage.getItem('my_id')) {
+        localStorage.removeItem('token');
+
+        this.router.navigateByUrl('/login');
+      }
+
+      this.loadAccounts();
+    });
   }
 }

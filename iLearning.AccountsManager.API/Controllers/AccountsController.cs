@@ -1,9 +1,11 @@
-﻿using iLearning.AccountsManager.Domain.Enums;
+﻿using iLearning.AccountsManager.API.Hubs;
+using iLearning.AccountsManager.Domain.Enums;
 using iLearning.AccountsManager.Infrastructure.Auth;
 using iLearning.AccountsManager.Infrastructure.Auth.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Policy;
 
@@ -16,13 +18,16 @@ public class AccountsController : ControllerBase
 {
     private readonly AuthenticationDbContext _context;
     private readonly UserManager<Account> _userManager;
+    private readonly IHubContext<AccountsHub> _hub;
 
     public AccountsController(
         AuthenticationDbContext context,
-        UserManager<Account> userManager)
+        UserManager<Account> userManager,
+        IHubContext<AccountsHub> hub)
     {
         _context = context;
         _userManager = userManager;
+        _hub = hub;
     }
 
     [HttpGet]
@@ -41,6 +46,8 @@ public class AccountsController : ControllerBase
             await _userManager.DeleteAsync(user);
         }
 
+        await _hub.Clients.All.SendAsync("AccountDeleted", id);
+
         return Ok();
     }
 
@@ -55,6 +62,8 @@ public class AccountsController : ControllerBase
             await _userManager.UpdateAsync(user);
         }
 
+        await _hub.Clients.All.SendAsync("AccountBlocked", id);
+
         return Ok();
     }
 
@@ -68,6 +77,8 @@ public class AccountsController : ControllerBase
             user.State = AccountState.Active;
             await _userManager.UpdateAsync(user);
         }
+
+        await _hub.Clients.All.SendAsync("AccountUnblocked", id);
 
         return Ok();
     }

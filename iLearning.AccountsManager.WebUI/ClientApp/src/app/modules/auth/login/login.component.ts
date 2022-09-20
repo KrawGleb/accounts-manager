@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
       .login(request)
       .pipe(
         tap((response) => {
-          this.router.navigateByUrl('/table')
+          this.router.navigateByUrl('/table');
         })
       )
       .subscribe();

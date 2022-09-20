@@ -6,4 +6,21 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Accounts\Commands\" />
+    <Folder Include="Accounts\Handlers\" />
+    <Folder Include="Accounts\Queries\" />
+    <Folder Include="Authentication\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\iLearning.AccountsManager.Infrastructure\iLearning.AccountsManager.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

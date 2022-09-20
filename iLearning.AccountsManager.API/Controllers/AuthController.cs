@@ -1,7 +1,8 @@
 ﻿using iLearning.AccountsManager.API.Hubs;
+using iLearning.AccountsManager.Application.Authentication.Commands.Login;
+using iLearning.AccountsManager.Application.Authentication.Commands.Register;
 using iLearning.AccountsManager.Domain.Enums;
 using iLearning.AccountsManager.Domain.Models;
-using iLearning.AccountsManager.Infrastructure.Auth.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -14,89 +15,42 @@ namespace iLearning.AccountsManager.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthController : ControllerBase
+public class AuthController : ApiControllerBase
 {
-    private readonly UserManager<Account> _userManager;
-    private readonly SignInManager<Account> _signInManager;
     private readonly IHubContext<AccountsHub> _hub;
-    private readonly IConfiguration _configuration;
 
-    public AuthController(
-        UserManager<Account> userManager,
-        SignInManager<Account> signInManager,
-        IHubContext<AccountsHub> hub,
-        IConfiguration configuration)
+    public AuthController(IHubContext<AccountsHub> hub)
     {
-        _userManager = userManager;
-        _signInManager = signInManager;
         _hub = hub;
-        _configuration = configuration;
     }
 
     [HttpPost]
     [Route("register")]
-    public async Task<IActionResult> Register([FromBody] RegistrationRequestModel registrationRequest)
+    public async Task<IActionResult> Register([FromBody] RegisterCommand command)
     {
-        var user = await _userManager.FindByEmailAsync(registrationRequest.Email);
-
-        if (user is not null)
+        try
+        {
+            var result = await Mediator.Send(command);
+            await _hub.Clients.All.SendAsync("NewAccount");
+            return Ok(result);
+        }
+        catch (Exception ex)
         {
             return BadRequest();
         }
-
-        var account = new Account()
-        {
-            Name = registrationRequest.Name,
-            UserName = registrationRequest.Email,
-            Email = registrationRequest.Email,
-            RegistrationDate = DateTime.Now,
-            LastLoginDate = DateTime.Now
-        };
-
-        var result = await _userManager.CreateAsync(account, registrationRequest.Password);
-
-        await _hub.Clients.All.SendAsync("NewAccount");
-
-        return Ok(result);
     }
 
     [HttpPost]
     [Route("login")]
-    public async Task<IActionResult> Login([FromBody] LoginRequestModel loginRequest)
+    public async Task<IActionResult> Login([FromBody] LoginCommand command)
     {
-        var user = await _userManager.FindByEmailAsync(loginRequest.Email);
-
-        if (user is not null &&
-            await _userManager.CheckPasswordAsync(user, loginRequest.Password))
+        try
         {
-            if (user.State == AccountState.Blocked)
-            {
-                return BadRequest(new { message = "You're blocked." });
-            }
-
-
-            user.LastLoginDate = DateTime.Now;
-
-            var key = Encoding.UTF8.GetBytes(_configuration["ApplicationSettings:JWT_Secret"].ToString());
-
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim("UserID", user.Id),
-
-                }),
-                Expires = DateTime.UtcNow.AddMinutes(60),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-            var token = tokenHandler.WriteToken(securityToken);
-
-            return Ok(new { token, Id = user.Id });
+            return Ok(await Mediator.Send(command));
         }
-
-        return BadRequest(new {message = "Email or Password is incorrect."});
+        catch (Exception ex)
+        {
+            return BadRequest();
+        }
     }
 }

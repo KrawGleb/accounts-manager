@@ -1,7 +1,7 @@
 ﻿using iLearning.AccountsManager.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 
-namespace iLearning.AccountsManager.Infrastructure.Auth.Models;
+namespace iLearning.AccountsManager.Domain.Models;
 
 public class Account : IdentityUser
 {

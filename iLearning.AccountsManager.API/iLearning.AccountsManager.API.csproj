@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\iLearning.AccountsManager.Application\iLearning.AccountsManager.Application.csproj" />
     <ProjectReference Include="..\iLearning.AccountsManager.Infrastructure\iLearning.AccountsManager.Infrastructure.csproj" />
   </ItemGroup>
 

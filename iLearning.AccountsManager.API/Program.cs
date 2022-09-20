@@ -1,4 +1,5 @@
 using iLearning.AccountsManager.API.Hubs;
+using iLearning.AccountsManager.Application;
 using iLearning.AccountsManager.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +12,7 @@ var key = Encoding.UTF8.GetBytes(builder.Configuration["ApplicationSettings:JWT_
 builder.Services.AddSignalR();
 
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
 
 builder.Services.AddCors(options =>
 {

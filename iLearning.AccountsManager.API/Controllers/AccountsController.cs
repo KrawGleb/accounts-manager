@@ -1,13 +1,12 @@
 ﻿using iLearning.AccountsManager.API.Hubs;
 using iLearning.AccountsManager.Domain.Enums;
+using iLearning.AccountsManager.Domain.Models;
 using iLearning.AccountsManager.Infrastructure.Auth;
-using iLearning.AccountsManager.Infrastructure.Auth.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Policy;
 
 namespace iLearning.AccountsManager.API.Controllers;
 

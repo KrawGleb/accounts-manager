@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs';
+import { catchError, of, tap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -10,6 +10,8 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./registration.component.scss'],
 })
 export class RegistrationComponent {
+  public errorMessages: string[] = [];
+
   public formGroup = this.formBuilder.group({
     Name: ['', Validators.required],
     Email: ['', [Validators.required, Validators.email]],
@@ -36,17 +38,25 @@ export class RegistrationComponent {
       .register(request)
       .pipe(
         tap((response) => {
-          if (response.succeeded) {
-            this.authService
-              .login({
-                Email: this.formGroup.value.Email,
-                Password: this.formGroup.value.Passwords.Password,
-              })
-              .pipe(tap(() => this.router.navigateByUrl('/table')))
-              .subscribe();
-          } else {
-            console.log(response);
-          }
+          this.authService
+            .login({
+              Email: this.formGroup.value.Email,
+              Password: this.formGroup.value.Passwords.Password,
+            })
+            .pipe(tap(() => this.router.navigateByUrl('/table')))
+            .subscribe();
+        }),
+        catchError((err) => {
+          console.log(err);
+
+          let result = err.error.errors
+            ? Object.entries(err.error.errors).map(([k, v]) => v)
+            : Object.entries(err.error).map(([k, v]) => v);
+          this.errorMessages = result
+            .flat(1)
+            .filter((error) => error) as string[];
+
+          return of();
         })
       )
       .subscribe();

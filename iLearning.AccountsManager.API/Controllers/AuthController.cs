@@ -1,4 +1,5 @@
 ﻿using iLearning.AccountsManager.API.Hubs;
+using iLearning.AccountsManager.Domain.Enums;
 using iLearning.AccountsManager.Domain.Models;
 using iLearning.AccountsManager.Infrastructure.Auth.Models;
 using Microsoft.AspNetCore.Identity;
@@ -68,6 +69,12 @@ public class AuthController : ControllerBase
         if (user is not null &&
             await _userManager.CheckPasswordAsync(user, loginRequest.Password))
         {
+            if (user.State == AccountState.Blocked)
+            {
+                return BadRequest(new { message = "You're blocked." });
+            }
+
+
             user.LastLoginDate = DateTime.Now;
 
             var key = Encoding.UTF8.GetBytes(_configuration["ApplicationSettings:JWT_Secret"].ToString());

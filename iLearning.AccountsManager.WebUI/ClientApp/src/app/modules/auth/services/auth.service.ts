@@ -27,10 +27,6 @@ export class AuthService {
         tap((response: any) => {
           localStorage.setItem('token', response.token);
           localStorage.setItem('my_id', response.id);
-        }),
-        catchError((err) => {
-
-          return of();
         })
       );
   }

@@ -80,4 +80,8 @@ export class AccountsTableComponent implements OnInit {
         .subscribe()
     );
   }
+
+  public getMyId() {
+    return localStorage.getItem('my_id');
+  }
 }

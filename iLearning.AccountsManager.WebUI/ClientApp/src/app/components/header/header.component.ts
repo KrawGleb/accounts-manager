@@ -18,4 +18,8 @@ export class HeaderComponent{
 
     this.router.navigateByUrl('/login');
   }
+
+  public getMyId() {
+    return localStorage.getItem('my_id');
+  }
 }

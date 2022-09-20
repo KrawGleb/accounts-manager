@@ -23,7 +23,6 @@ export class LoginComponent implements OnInit {
   public errorMessages: string[] = [];
 
   constructor(
-    private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
     private readonly router: Router
   ) {}

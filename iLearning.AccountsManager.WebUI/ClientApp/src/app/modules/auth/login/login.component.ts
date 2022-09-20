@@ -1,15 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'acm-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent{
 
-  constructor() { }
+  public formGroup = this.formBuilder.group({
+    Email: [''],
+    Password: ['']
+  });
 
-  ngOnInit(): void {
-  }
+  constructor(private readonly formBuilder: FormBuilder)
+  { }
 
 }

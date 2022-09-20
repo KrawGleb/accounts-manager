@@ -1,4 +1,6 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { tap } from 'rxjs';
 import { Account } from 'src/app/models/account.model';
 import { AccountsService } from 'src/app/services/accounts.service';
@@ -9,23 +11,73 @@ import { AccountsService } from 'src/app/services/accounts.service';
   styleUrls: ['./accounts-table.component.scss'],
 })
 export class AccountsTableComponent implements OnInit {
-  public accounts: Account[] = [];
+  public displayedColumns = [
+    'select',
+    'id',
+    'name',
+    'email',
+    'registrationDate',
+    'lastLoginDate',
+    'status',
+  ];
+  public dataSource = new MatTableDataSource<Account>();
+  public selection = new SelectionModel<Account>(true, []);
 
-  constructor(private readonly accountsService: AccountsService) {}
+  constructor(private readonly accountsService: AccountsService) {
+    this.loadAccounts();
+  }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  public isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+
+    return numSelected === numRows;
+  }
+
+  public masterToggle() {
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.dataSource.data.forEach((row) => this.selection.select(row));
+  }
+
+  public loadAccounts() {
     this.accountsService
       .getAccounts()
       .pipe(
         tap((response) => {
-          console.log(response);
-          this.accounts = response;
+          this.dataSource = new MatTableDataSource<Account>(response);
+          this.selection.clear();
         })
       )
       .subscribe();
   }
 
-  public dateToString(date: Date) {
-    return `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`
+  public deleteSelectedAccounts() {
+    this.selection.selected.forEach((account) =>
+      this.accountsService
+        .deleteAccountById(account.id)
+        .pipe(tap(() => this.loadAccounts()))
+        .subscribe()
+    );
+  }
+
+  public blockSelectedAccounts() {
+    this.selection.selected.forEach((account) =>
+      this.accountsService
+        .blockAccountById(account.id)
+        .pipe(tap(() => this.loadAccounts()))
+        .subscribe()
+    );
+  }
+
+  public unblockSelectedAccounts() {
+    this.selection.selected.forEach((account) =>
+      this.accountsService
+        .unblockAccountById(account.id)
+        .pipe(tap(() => this.loadAccounts()))
+        .subscribe()
+    );
   }
 }

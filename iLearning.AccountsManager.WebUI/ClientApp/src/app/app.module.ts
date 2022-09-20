@@ -11,6 +11,7 @@ import { RegistrationComponent } from './modules/auth/registration/registration.
 import { AuthModule } from './modules/auth/auth.module';
 import { AccountsTableComponent } from './components/accounts-table/accounts-table.component';
 import { AuthGuard } from './modules/auth/guards/auth.guard';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { AuthGuard } from './modules/auth/guards/auth.guard';
     ]),
     ComponentsModule,
     AuthModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

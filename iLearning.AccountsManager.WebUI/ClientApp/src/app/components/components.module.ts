@@ -4,7 +4,9 @@ import { HeaderComponent } from './header/header.component';
 import { RouterModule } from '@angular/router';
 import { AccountsTableComponent } from './accounts-table/accounts-table.component';
 
-
+import { MatTableModule } from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -13,7 +15,10 @@ import { AccountsTableComponent } from './accounts-table/accounts-table.componen
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatButtonModule
   ],
   exports: [
     HeaderComponent,

@@ -9,6 +9,8 @@ import { ComponentsModule } from './components/components.module';
 import { LoginComponent } from './modules/auth/login/login.component';
 import { RegistrationComponent } from './modules/auth/registration/registration.component';
 import { AuthModule } from './modules/auth/auth.module';
+import { AccountsTableComponent } from './components/accounts-table/accounts-table.component';
+import { AuthGuard } from './modules/auth/guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { AuthModule } from './modules/auth/auth.module';
     RouterModule.forRoot([
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegistrationComponent },
+      { path: 'table', component: AccountsTableComponent, canActivate: [AuthGuard]  }
     ]),
     ComponentsModule,
     AuthModule,

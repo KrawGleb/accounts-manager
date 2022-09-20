@@ -5,6 +5,7 @@ namespace iLearning.AccountsManager.Infrastructure.Auth.Models;
 
 public class Account : IdentityUser
 {
+    public string? Name { get; set; }
     public AccountState State { get; set; }
     public DateTime RegistrationDate { get; set; }
     public DateTime LastLoginDate { get; set; }

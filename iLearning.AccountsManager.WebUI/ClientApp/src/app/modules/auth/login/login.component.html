@@ -17,7 +17,7 @@
                   Sign In
                 </p>
 
-                <form [formGroup]="formGroup">
+                <form [formGroup]="formGroup" (submit)="login()">
                   <!-- Email input -->
                   <div class="form-outline mb-4">
                     <input

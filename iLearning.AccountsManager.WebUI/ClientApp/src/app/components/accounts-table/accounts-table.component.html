@@ -1,0 +1,23 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Registration date</th>
+      <th scope="col">Last login date</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let account of accounts">
+      <th></th>
+      <th>{{account.id}}</th>
+      <th>{{account.userName}}</th>
+      <th>{{account.email}}</th>
+      <th>{{account.registrationDate}}</th>
+      <th>{{account.lastLoginDate}}</th>
+    </tr>
+  </tbody>
+</table>

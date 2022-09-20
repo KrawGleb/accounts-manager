@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'acm-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent{
+  constructor(private readonly router: Router) {}
 
-  constructor() { }
-
-  ngOnInit(): void {
+  public isSignedIn() {
+    return !!localStorage.getItem('token');
   }
 
+  public signOut() {
+    localStorage.removeItem('token');
+
+    this.router.navigateByUrl('/login');
+  }
 }

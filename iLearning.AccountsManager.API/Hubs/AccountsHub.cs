@@ -3,5 +3,4 @@
 namespace iLearning.AccountsManager.API.Hubs;
 
 public class AccountsHub : Hub
-{
-}
+{ }

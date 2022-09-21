@@ -1,4 +1,5 @@
 ﻿using iLearning.AccountsManager.Application.Authentication.Commands.Login;
+using iLearning.AccountsManager.Application.Common.Exceptions;
 using iLearning.AccountsManager.Domain.Enums;
 using iLearning.AccountsManager.Domain.Models;
 using MediatR;
@@ -26,22 +27,16 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResult>
 
     public async Task<LoginResult> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userManager.FindByEmailAsync(request.Email);
-        var passwordIsValid = await _userManager.CheckPasswordAsync(user, request.Password);
+        var account = await _userManager.FindByEmailAsync(request.Email);
+        var passwordIsValid = await _userManager.CheckPasswordAsync(account, request.Password);
 
-        if (user is null || !passwordIsValid)
-        {
-            // ToDo: Custom exception 
-            throw new InvalidOperationException();
-        }
+        if (account is null || !passwordIsValid)
+            throw new InvalidPasswordOrEmailException();
 
-        if (user.State == AccountState.Blocked)
-        {
-            // ToDo: Custom exception
-            throw new InvalidOperationException();
-        }
+        if (account.State == AccountState.Blocked)
+            throw new AccountIsBlockedException();
 
-        user.LastLoginDate = DateTime.Now;
+        account.LastLoginDate = DateTime.Now;
 
         var key = Encoding.UTF8.GetBytes(_configuration["ApplicationSettings:JWT_Secret"].ToString());
 
@@ -49,7 +44,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResult>
         {
             Subject = new ClaimsIdentity(new Claim[]
             {
-                    new Claim("UserID", user.Id),
+                    new Claim("UserID", account.Id),
 
             }),
             Expires = DateTime.UtcNow.AddMinutes(60),
@@ -63,7 +58,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResult>
         return new LoginResult
         {
             Token = token,
-            Id = user.Id
+            Id = account.Id
         };
     }
 }

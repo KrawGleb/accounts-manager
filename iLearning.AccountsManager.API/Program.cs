@@ -1,3 +1,4 @@
+using iLearning.AccountsManager.API.Common.Filters.ExceptionFilters;
 using iLearning.AccountsManager.API.Hubs;
 using iLearning.AccountsManager.Application;
 using iLearning.AccountsManager.Infrastructure;
@@ -43,7 +44,10 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<CustomExceptionsFilter>();
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

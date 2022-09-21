@@ -1,4 +1,5 @@
 ﻿using iLearning.AccountsManager.Application.Authentication.Commands.Register;
+using iLearning.AccountsManager.Application.Common.Exceptions;
 using iLearning.AccountsManager.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -16,12 +17,11 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Account>
 
     public async Task<Account> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userManager.FindByEmailAsync(request.Email);
+        var existingAccount = await _userManager.FindByEmailAsync(request.Email);
 
-        if (user is not null)
+        if (existingAccount is not null)
         {
-            // ToDo: Custom exception
-            throw new InvalidOperationException();
+            throw new AccountExistsException();
         }
 
         var account = new Account()
@@ -33,7 +33,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Account>
             LastLoginDate = DateTime.Now
         };
 
-        var result = await _userManager.CreateAsync(account, request.Password);
+        await _userManager.CreateAsync(account, request.Password);
 
         return account;
     }

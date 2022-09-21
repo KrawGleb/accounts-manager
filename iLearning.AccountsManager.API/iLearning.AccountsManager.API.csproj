@@ -20,4 +20,8 @@
     <ProjectReference Include="..\iLearning.AccountsManager.Infrastructure\iLearning.AccountsManager.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\Middlewares\" />
+  </ItemGroup>
+
 </Project>

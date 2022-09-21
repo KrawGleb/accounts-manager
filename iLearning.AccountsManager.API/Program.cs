@@ -18,7 +18,7 @@ builder.Services.AddApplication();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", b => b
-        .WithOrigins(builder.Configuration["ApplicationSettings:Client_URL"])
+        .WithOrigins("https://accounts-manager-ui.herokuapp.com/")
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials());

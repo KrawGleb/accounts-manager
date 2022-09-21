@@ -47,14 +47,9 @@ export class RegistrationComponent {
             .subscribe();
         }),
         catchError((err) => {
-          console.log(err);
-
-          let result = err.error.errors
-            ? Object.entries(err.error.errors).map(([k, v]) => v)
-            : Object.entries(err.error).map(([k, v]) => v);
-          this.errorMessages = result
-            .flat(1)
-            .filter((error) => error) as string[];
+          if (err.status === 400) {
+            this.errorMessages.push(err.error)
+          }
 
           return of();
         })

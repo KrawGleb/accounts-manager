@@ -1,4 +1,6 @@
+using iLearning.AccountsManager.API.Common.Filters.ExceptionFilters;
 using iLearning.AccountsManager.API.Hubs;
+using iLearning.AccountsManager.Application;
 using iLearning.AccountsManager.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +13,7 @@ var key = Encoding.UTF8.GetBytes(builder.Configuration["ApplicationSettings:JWT_
 builder.Services.AddSignalR();
 
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
 
 builder.Services.AddCors(options =>
 {
@@ -41,7 +44,10 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<CustomExceptionsFilter>();
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

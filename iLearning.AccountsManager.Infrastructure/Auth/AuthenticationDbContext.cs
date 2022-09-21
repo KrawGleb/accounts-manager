@@ -1,4 +1,4 @@
-﻿using iLearning.AccountsManager.Infrastructure.Auth.Models;
+﻿using iLearning.AccountsManager.Domain.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Folder Include="Auth\Migrations\" />
+    <Folder Include="Auth\Models\" />
   </ItemGroup>
 
 </Project>

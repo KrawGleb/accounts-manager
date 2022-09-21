@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { Account } from 'src/app/models/account.model';
+import { AccountState } from 'src/app/models/enums/account-status.enum';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { AccountsService } from 'src/app/services/accounts.service';
 import { SignalRService } from 'src/app/services/signal-r.service';
@@ -78,6 +79,15 @@ export class AccountsTableComponent implements OnInit {
 
   public getMyId() {
     return localStorage.getItem('my_id');
+  }
+
+  public stateToString(state: AccountState) {
+    if (state === AccountState.Active) {
+      return "Active";
+    }
+    else {
+      return "Blocked";
+    }
   }
 
   private loadAccounts() {

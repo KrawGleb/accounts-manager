@@ -6,8 +6,8 @@ import { tap } from 'rxjs';
 import { Account } from 'src/app/models/account.model';
 import { AccountState } from 'src/app/models/enums/account-status.enum';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
-import { AccountsService } from 'src/app/services/accounts.service';
-import { SignalRService } from 'src/app/services/signal-r.service';
+import { AccountsService } from 'src/app/modules/common/services/accounts.service';
+import { SignalRService } from 'src/app/modules/common/services/signal-r.service';
 
 @Component({
   selector: 'acm-accounts-table',

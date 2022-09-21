@@ -1,7 +1,7 @@
 import { JsonPipe } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Account } from '../models/account.model';
+import { Account } from '../../../models/account.model';
 
 @Injectable({
   providedIn: 'root',

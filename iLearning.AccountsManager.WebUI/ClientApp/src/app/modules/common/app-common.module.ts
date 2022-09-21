@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './header/header.component';
 import { RouterModule } from '@angular/router';
-import { AccountsTableComponent } from './accounts-table/accounts-table.component';
 
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
+import { AccountsTableComponent } from './components/accounts-table/accounts-table.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
-    HeaderComponent,
-    AccountsTableComponent
+    AccountsTableComponent,
+    HeaderComponent
   ],
   imports: [
     CommonModule,
@@ -24,4 +24,4 @@ import { MatButtonModule } from '@angular/material/button';
     HeaderComponent,
   ]
 })
-export class ComponentsModule { }
+export class AppCommonModule { }

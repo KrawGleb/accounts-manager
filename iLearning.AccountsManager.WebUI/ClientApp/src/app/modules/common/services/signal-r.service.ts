@@ -9,7 +9,7 @@ export class SignalRService {
 
   public startConnection() {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:7286/hub')
+      .withUrl('https://accounts-manager-api.herokuapp.com/hub')
       .build();
 
       this.hubConnection

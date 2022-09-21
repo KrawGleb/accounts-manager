@@ -1,4 +1,3 @@
-import { JsonPipe } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Account } from '../../../models/account.model';
@@ -7,7 +6,7 @@ import { Account } from '../../../models/account.model';
   providedIn: 'root',
 })
 export class AccountsService {
-  private readonly BASE_URL = 'https://localhost:7286/api';
+  private readonly BASE_URL = 'https://accounts-manager-api.herokuapp.com/api';
 
   constructor(private readonly httpClient: HttpClient) {}
 

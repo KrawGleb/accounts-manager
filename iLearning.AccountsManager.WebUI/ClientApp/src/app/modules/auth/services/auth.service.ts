@@ -8,7 +8,7 @@ import { RegistrationRequest } from '../models/registration-request.model';
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly BASE_URL = 'https://localhost:7286/api';
+  private readonly BASE_URL = 'https://accounts-manager-api.herokuapp.com/api';
 
   constructor(
     private readonly httpClient: HttpClient) {}
